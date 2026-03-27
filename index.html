@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AcademicEase</title>
+    <meta
+      name="description"
+      content="AcademicEase is an academic results management system for marks entry, performance analysis, and professional report generation."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">Academic Results Management</span>
+          <h1>AcademicEase</h1>
+          <p class="hero-text">
+            Replace manual spreadsheets with a clean digital workspace for marks entry,
+            automatic grading, student performance analysis, and polished report cards.
+          </p>
+        </div>
+
+        <div class="hero-panel">
+          <p class="hero-panel-label">MVP Focus</p>
+          <ul class="hero-points">
+            <li>Easy marks entry</li>
+            <li>Automatic calculations</li>
+            <li>Performance analysis</li>
+            <li>Printable report generation</li>
+            <li>PDF-friendly output and local storage</li>
+          </ul>
+        </div>
+      </header>
+
+      <section class="panel toolbar">
+        <div class="toolbar-actions">
+          <button id="exportDataBtn" class="button accent">Export Data</button>
+          <button id="importDataBtn" class="button secondary">Import Data</button>
+          <button id="exportCsvBtn" class="button secondary">Export CSV</button>
+          <button id="printReportBtn" class="button secondary">Print / Save PDF</button>
+          <button id="loadDemoBtn" class="button ghost">Load Demo Data</button>
+          <button id="clearDataBtn" class="button ghost danger">Clear Records</button>
+          <input id="importFileInput" type="file" accept="application/json" hidden />
+        </div>
+        <p class="toolbar-note">
+          Results are saved automatically on this device through your browser's local
+          storage.
+        </p>
+      </section>
+
+      <section id="summaryCards" class="summary-grid" aria-label="Summary cards"></section>
+
+      <div class="workspace-grid">
+        <section class="panel">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">Setup</span>
+              <h2>School Details</h2>
+            </div>
+            <p>These details appear across report cards and the result summary.</p>
+          </div>
+
+          <form id="settingsForm" class="settings-grid">
+            <label>
+              <span>School Name</span>
+              <input id="schoolNameInput" name="schoolName" type="text" />
+            </label>
+            <label>
+              <span>Class Name</span>
+              <input id="classNameInput" name="className" type="text" />
+            </label>
+            <label>
+              <span>Term</span>
+              <input id="termInput" name="term" type="text" />
+            </label>
+            <label>
+              <span>Academic Year</span>
+              <input id="yearInput" name="year" type="text" />
+            </label>
+          </form>
+        </section>
+
+        <section class="panel">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">Insights</span>
+              <h2>Performance Analytics</h2>
+            </div>
+            <p>Live classroom trends based on the scores currently entered.</p>
+          </div>
+
+          <div id="analyticsPanel" class="analytics-grid"></div>
+        </section>
+      </div>
+
+      <div class="workspace-grid workspace-grid-wide">
+        <section class="panel">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">Marks Entry</span>
+              <h2 id="studentFormTitle">Add Student Results</h2>
+            </div>
+            <p id="studentFormSubtitle">Enter student information and subject scores.</p>
+          </div>
+
+          <form id="studentForm" class="student-form">
+            <div class="settings-grid">
+              <label>
+                <span>Student Name</span>
+                <input id="studentNameInput" name="studentName" type="text" required />
+              </label>
+              <label>
+                <span>Admission Number</span>
+                <input id="admissionNumberInput" name="admissionNumber" type="text" required />
+              </label>
+              <label>
+                <span>Gender</span>
+                <select id="genderInput" name="gender">
+                  <option>Female</option>
+                  <option>Male</option>
+                  <option>Prefer not to say</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="subject-header">
+              <h3>Subjects and Scores</h3>
+              <button id="addSubjectBtn" class="button secondary" type="button">Add Subject</button>
+            </div>
+
+            <div id="subjectRows" class="subject-rows"></div>
+            <div id="draftSummary" class="draft-summary"></div>
+
+            <div class="form-actions">
+              <button id="saveStudentBtn" class="button accent" type="submit">
+                Save Result
+              </button>
+              <button id="resetFormBtn" class="button secondary" type="button">Reset Form</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">Records</span>
+              <h2>Student Results</h2>
+            </div>
+            <p>Search, edit, preview, or remove any student record.</p>
+          </div>
+
+          <div class="records-toolbar">
+            <input
+              id="searchInput"
+              class="search-input"
+              type="search"
+              placeholder="Search by name or admission number"
+            />
+          </div>
+
+          <div class="table-shell">
+            <table class="records-table">
+              <thead>
+                <tr>
+                  <th>Pos</th>
+                  <th>Student</th>
+                  <th>Admission No.</th>
+                  <th>Subjects</th>
+                  <th>Total</th>
+                  <th>Average</th>
+                  <th>Grade</th>
+                  <th>Remark</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="recordsTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <section id="reportSection" class="panel report-panel">
+        <div class="section-heading report-heading">
+          <div>
+            <span class="section-kicker">Reports</span>
+            <h2>Printable Report Card</h2>
+          </div>
+          <div class="report-controls">
+            <label>
+              <span class="visually-hidden">Select student report</span>
+              <select id="reportStudentSelect"></select>
+            </label>
+            <button id="printCurrentReportBtn" class="button accent" type="button">
+              Print This Report
+            </button>
+          </div>
+        </div>
+
+        <div id="reportPreview" class="report-preview"></div>
+      </section>
+    </div>
+
+    <noscript>AcademicEase needs JavaScript enabled to calculate and display results.</noscript>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
