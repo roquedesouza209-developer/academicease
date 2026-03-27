@@ -49,6 +49,9 @@ web_modules/
 
 # Optional npm cache directory
 .npm
+.npm-cache/
+.npm-dist/
+.next-swc-cache/
 
 # Optional eslint cache
 .eslintcache

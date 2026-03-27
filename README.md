@@ -30,6 +30,8 @@ npm run dev
 
 4. Open [http://localhost:3000](http://localhost:3000)
 
+Use the provided `npm` scripts instead of calling `next` directly. They already route AcademicEase through the local SWC WebAssembly fallback and Webpack where needed, which keeps the app working cleanly in restricted Windows environments.
+
 ## Main files
 
 - `app/layout.js` sets the root layout and metadata
